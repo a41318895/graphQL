@@ -1,0 +1,76 @@
+type Query {
+
+    # Get book via id
+    bookById(bookId: ID!): Book
+
+    # Get all books
+    allBooks: [Book]
+
+    # Get books by title
+    booksByTitle(title: String!): [Book]
+
+    # Get books by type
+    booksByType(type: TypeEnum!): [Book]
+
+    # Get author via id
+    authorById(authorId: ID!): Author
+
+    # Get authors by lastName
+    authorsByLastName(lastName: String): [Author]
+}
+
+type Mutation {
+
+    # Create new book
+    createBook(createBookInput: CreateBookInput!): Book
+
+    # Update book
+    updateBook(bookId: ID!, createBookInput: CreateBookInput!): Book
+
+    # Delete book
+    deleteBook(bookId: ID!): Boolean
+
+    # Create new author
+    createAuthor(createAuthorInput: CreateAuthorInput!): Author
+
+    # Update author
+    updateAuthor(authorId: ID!, createAuthorInput: CreateAuthorInput!): Author
+
+    # Delete author
+    deleteAuthor(authorId: ID!): Boolean
+}
+
+type Book {
+    id: ID!
+    title: String!
+    page: Int
+    type: TypeEnum
+    author: Author
+    publicationYear: Int
+}
+
+type Author {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String
+    books: [Book]
+}
+
+enum TypeEnum {
+    SCIENCE, HISTORY, GEOGRAPHY, MATH, ENGLISH, FICTION, SOCIETY, ROMANTIC, JAPANESE, OTHERS
+}
+
+input CreateBookInput {
+    title: String!
+    page: Int
+    authorId: ID!
+    type: TypeEnum
+    publicationYear: Int
+}
+
+input CreateAuthorInput {
+    firstName: String!
+    lastName: String!
+    email: String
+}
